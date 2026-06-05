@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>姚锋 · 商业产品摄影</title>
+<style>
+:root{--bg:#0a0a0a;--text:#fff;--t2:rgba(255,255,255,.5);--t3:rgba(255,255,255,.25);--border:rgba(255,255,255,.06)}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:rgba(0,0,0,.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+nav .brand{font-size:13px;font-weight:500;letter-spacing:1px}
+nav .links{display:flex;gap:22px}
+nav .links a{color:var(--t2);text-decoration:none;font-size:12px;letter-spacing:.5px;transition:color .2s}
+nav .links a:hover{color:var(--text)}
+.hamburger{display:none;background:none;border:none;color:var(--text);font-size:20px;cursor:pointer}
+.mobile-menu{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.97);flex-direction:column;justify-content:center;align-items:center;gap:24px}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:var(--t2);text-decoration:none;font-size:18px}
+.mobile-menu .close{position:absolute;top:20px;right:28px;background:none;border:none;color:var(--text);font-size:26px;cursor:pointer}
+
+section{padding:80px 28px;max-width:1200px;margin:0 auto}
+.section-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
+.section-title{font-size:24px;font-weight:500;margin-bottom:8px;letter-spacing:-.3px}
+.section-sub{font-size:14px;color:var(--t2);margin-bottom:40px;line-height:1.6;max-width:600px}
+
+.hero{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden}
+.hero-bg{position:absolute;inset:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.75))}
+.hero-content{position:absolute;bottom:20%;left:0;right:0;padding:0 28px;text-align:center;z-index:2}
+.hero-content h1{font-size:clamp(26px,5vw,48px);font-weight:500;letter-spacing:-.5px;margin-bottom:12px}
+.hero-content .subtitle{font-size:clamp(13px,2vw,17px);color:var(--t2);line-height:1.6;max-width:560px;margin:0 auto 24px}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:10px 24px;border-radius:2px;font-size:13px;letter-spacing:.5px;text-decoration:none;transition:all .25s;cursor:pointer;font-family:inherit}
+.btn-primary{background:var(--text);color:var(--bg);border:none}
+.btn-primary:hover{background:var(--t2)}
+.btn-outline{border:1px solid var(--t3);color:var(--text);background:transparent}
+.btn-outline:hover{border-color:var(--text)}
+
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.service-card{background:#111;border-radius:2px;overflow:hidden;cursor:pointer;transition:transform .3s}
+.service-card:hover{transform:translateY(-4px)}
+.service-card .svc-img{aspect-ratio:16/10;overflow:hidden;background:#1a1a1a}
+.service-card .svc-img img,.service-card .svc-img video{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.service-card:hover .svc-img img{transform:scale(1.04)}
+.service-card .svc-text{padding:20px}
+.service-card .svc-text h3{font-size:16px;font-weight:500;margin-bottom:6px}
+.service-card .svc-text p{font-size:13px;color:var(--t2);line-height:1.5}
+
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.tab{padding:7px 16px;border-radius:2px;font-size:12px;letter-spacing:.5px;cursor:pointer;border:1px solid var(--t3);background:transparent;color:var(--t2);transition:all .2s;font-family:inherit}
+.tab:hover{border-color:var(--t2);color:var(--text)}
+.tab.active{background:var(--text);color:var(--bg);border-color:var(--text)}
+
+.featured-grid,.all-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px}
+.card-img{aspect-ratio:4/3;overflow:hidden;cursor:pointer;background:#111;position:relative}
+.card-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s,opacity .4s}
+.card-img:hover img{transform:scale(1.03);opacity:.8}
+
+.sub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.sub-card{cursor:pointer;position:relative;aspect-ratio:4/3;overflow:hidden;background:#111;border-radius:2px}
+.sub-card img{width:100%;height:100%;object-fit:cover;transition:transform .3s,opacity .3s}
+.sub-card:hover img{transform:scale(1.03);opacity:.75}
+.sub-card .sub-info{position:absolute;bottom:0;left:0;right:0;padding:14px;background:linear-gradient(transparent,rgba(0,0,0,.85))}
+.sub-card .sub-info .sub-name{font-size:14px;font-weight:500}
+.sub-card .sub-info .sub-count{font-size:11px;color:var(--t2);margin-top:2px}
+
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:var(--t2);cursor:pointer;font-size:13px;margin-bottom:20px;transition:color .2s}
+.back-btn:hover{color:var(--text)}
+
+.load-more{display:block;margin:24px auto 0;padding:10px 32px;background:transparent;border:1px solid var(--t3);color:var(--t2);font-size:13px;cursor:pointer;border-radius:2px;transition:all .2s;font-family:inherit}
+.load-more:hover{border-color:var(--text);color:var(--text)}
+
+.capability{font-size:14px;color:var(--t2);line-height:1.8;max-width:700px}
+.capability li{margin-bottom:6px;list-style:none;padding-left:16px;position:relative}
+.capability li::before{content:'—';position:absolute;left:0;color:var(--t3)}
+
+.video-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.video-card{cursor:pointer;position:relative}
+.video-card .vthumb{aspect-ratio:16/9;overflow:hidden;background:#111;position:relative}
+.video-card .vthumb video{width:100%;height:100%;object-fit:cover}
+.video-card .vthumb:hover video{opacity:.8}
+.video-card .vplay{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:18px;pointer-events:none}
+.video-card .vtitle{margin-top:8px;font-size:13px}
+
+.process{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;counter-reset:step}
+.process-step{position:relative;padding:24px 20px 20px;border:1px solid var(--border);border-radius:2px}
+.process-step::before{counter-increment:step;content:'0' counter(step);position:absolute;top:-12px;left:16px;background:var(--bg);padding:0 8px;font-size:11px;color:var(--t3);letter-spacing:1px}
+.process-step h4{font-size:15px;font-weight:500;margin-bottom:6px}
+.process-step p{font-size:13px;color:var(--t2);line-height:1.5}
+
+.contact-box{background:#111;padding:32px;border-radius:2px;text-align:center;max-width:500px;margin:0 auto}
+.contact-box p{font-size:14px;color:var(--t2);margin-bottom:6px}
+.contact-box .info{font-size:16px;margin:12px 0}
+
+.about-text{font-size:14px;color:var(--t2);line-height:1.8;max-width:700px}
+
+.lb{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.97);justify-content:center;align-items:center;cursor:pointer}
+.lb.active{display:flex}
+.lb img,.lb video{max-width:92vw;max-height:92vh;object-fit:contain}
+.lb .lbclose{position:absolute;top:16px;right:24px;color:var(--text);font-size:28px;cursor:pointer;z-index:301}
+
+footer{padding:40px 28px;text-align:center;font-size:11px;color:var(--t3);border-top:1px solid var(--border)}
+
+@media(max-width:768px){
+  nav .links{display:none}
+  .hamburger{display:block}
+  section{padding:56px 16px}
+  .hero{height:80vh;min-height:500px}
+  .featured-grid,.all-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+  .video-grid{grid-template-columns:1fr}
+  .sub-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand">姚锋 · 产品摄影</span>
+  <div class="links">
+    <a href="#home">首页</a><a href="#services">服务</a><a href="#featured">精选作品</a>
+    <a href="#allworks">全部作品</a><a href="#videos">视频</a><a href="#aivisual">AI视觉</a>
+    <a href="#about">关于</a><a href="#contact">联系</a>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close" onclick="toggleMenu()">×</button>
+  <a href="#home" onclick="toggleMenu()">首页</a><a href="#services" onclick="toggleMenu()">服务</a>
+  <a href="#featured" onclick="toggleMenu()">精选作品</a><a href="#allworks" onclick="toggleMenu()">全部作品</a>
+  <a href="#videos" onclick="toggleMenu()">视频</a><a href="#aivisual" onclick="toggleMenu()">AI视觉</a>
+  <a href="#about" onclick="toggleMenu()">关于</a><a href="#contact" onclick="toggleMenu()">联系</a>
+</div>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-bg"><img src="" id="heroImg"></div>
+  <div class="hero-content">
+    <h1>姚锋 · 商业产品摄影</h1>
+    <p class="subtitle">为家居、灯具、户外、建材与消费品品牌提供产品摄影、场景视觉和 AI 辅助内容方案。</p>
+    <div class="hero-cta">
+      <a href="#featured" class="btn btn-primary">查看代表作品</a>
+      <a href="#contact" class="btn btn-outline">联系合作</a>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section id="services">
+  <div class="section-label">服务方向</div>
+  <div class="section-title">我能为你做什么</div>
+  <div class="section-sub">专注商业产品影像，覆盖拍摄、场景视觉与 AI 辅助方案。</div>
+  <div class="services" id="servicesGrid"></div>
+</section>
+
+<!-- Featured -->
+<section id="featured">
+  <div class="section-label">精选作品</div>
+  <div class="section-title">代表作品</div>
+  <div class="tabs" id="featuredTabs"></div>
+  <div class="featured-grid" id="featuredGrid"></div>
+</section>
+
+<!-- All Works -->
+<section id="allworks">
+  <div class="section-label">全部作品</div>
+  <div class="section-title">完整作品档案</div>
+  <div class="section-sub">按作品类型和产品类别浏览完整作品集。</div>
+  <div class="tabs" id="allworksCats"></div>
+  <div id="allworksContent"></div>
+</section>
+
+<!-- Capability -->
+<section>
+  <div class="section-label">项目能力</div>
+  <div class="section-title">我能稳定交付什么</div>
+  <ul class="capability">
+    <li>熟悉电商产品图拍摄规范，能批量稳定交付白底图与场景图</li>
+    <li>擅长家居、户外、灯具、建材、节日装饰类产品</li>
+    <li>能结合 AI 做脚本、分镜、产品文案、概念图和图生视频</li>
+    <li>可配合品牌、电商团队、设计团队完成内容资产生产</li>
+  </ul>
+</section>
+
+<!-- Videos -->
+<section id="videos">
+  <div class="section-label">视频作品</div>
+  <div class="section-title">产品视频</div>
+  <div class="tabs" id="videoTabs"></div>
+  <div id="videoGrid"></div>
+</section>
+
+<!-- AI Visual -->
+<section id="aivisual">
+  <div class="section-label">AI 产品视觉实验室</div>
+  <div class="section-title">AI 辅助视觉</div>
+  <div class="section-sub">基于文生图、图生图、图生视频能力，为产品前期视觉方向、脚本分镜、社交平台内容和概念图提供快速探索。</div>
+  <div class="featured-grid" id="aiGrid"></div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="section-label">关于</div>
+  <div class="section-title">关于姚锋</div>
+  <div class="about-text">
+    <p style="margin-bottom:12px">姚锋，商业产品摄影师，专注静物产品摄影、白底图、家居与户外场景视觉、产品视频拍摄。长期服务于电商产品图、品牌视觉素材和详情页内容制作，擅长以稳定、清晰、可交付的影像方式呈现产品质感、结构与使用场景。</p>
+    <p>同时结合 AI 工具进行产品概念图、视频脚本、分镜、社交平台文案和图生视频探索，为品牌内容生产提供更高效的前期方案与视觉辅助。</p>
+  </div>
+</section>
+
+<!-- Process -->
+<section>
+  <div class="section-label">合作流程</div>
+  <div class="section-title">如何合作</div>
+  <div class="process">
+    <div class="process-step"><h4>沟通需求</h4><p>确认产品类型、使用场景和交付用途</p></div>
+    <div class="process-step"><h4>确定方案</h4><p>确定拍摄方向、参考风格和交付清单</p></div>
+    <div class="process-step"><h4>拍摄制作</h4><p>进行拍摄、修图或 AI 辅助视觉制作</p></div>
+    <div class="process-step"><h4>精修交付</h4><p>输出成片，根据平台需求适配</p></div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="section-label">联系合作</div>
+  <div class="section-title">欢迎交流</div>
+  <div class="contact-box">
+    <p>如果你需要产品摄影、场景视觉、产品视频或 AI 辅助内容方案</p>
+    <div class="info">fengyao1021@gmail.com</div>
+    <div class="info">13528423803</div>
+    <p style="margin-top:12px;font-size:12px;color:var(--t3)">欢迎品牌方、电商团队、设计团队咨询</p>
+  </div>
+</section>
+
+<footer>© 2026 姚锋 · 商业产品摄影</footer>
+
+<div class="lb" id="lb" onclick="closeLB()"><span class="lbclose">×</span></div>
+
+<script src="data.js"></script>
+<script>
+const D=PORTFOLIO_DATA;
+let featuredFilter='all',videoTab='实拍视频',allworksView='categories',allworksCat='',allworksSub='',allworksPage=0;
+const PER_PAGE=24;
+
+// Hero
+document.getElementById('heroImg').src=D.hero;
+
+// Services
+(function(){
+  const svcImgs=[D.featured.find(x=>x.path.includes('水龙头'))||D.featured[0],D.featured.find(x=>x.path.includes('休闲椅'))||D.featured[5],D.videos.实拍视频[0],D.ai_featured[0]];
+  const svcs=[
+    {title:'产品白底图',desc:'适用于电商主图、详情页、平台标准图。重点呈现产品结构、材质、比例与细节。',img:svcImgs[0]},
+    {title:'场景图 / 生活方式图',desc:'适用于品牌官网、广告图、详情页和社交平台。呈现产品在真实使用环境中的价值。',img:svcImgs[1]},
+    {title:'产品视频拍摄',desc:'适用于新品发布、功能展示、社交平台短视频素材。完成产品展示与氛围呈现。',img:{path:svcImgs[2]?.path,name:svcImgs[2]?.title}},
+    {title:'AI 产品视觉',desc:'适用于视觉方向探索、概念图、脚本分镜和图生视频。在正式拍摄前快速验证风格。',img:svcImgs[3]},
+  ];
+  document.getElementById('servicesGrid').innerHTML=svcs.map(s=>{
+    const src=s.img?.path||'';
+    const isVideo=src?.includes('video');
+    return `<div class="service-card" onclick="location.href='#${s.title.includes('AI')?'aivisual':s.title.includes('视频')?'videos':'featured'}'"><div class="svc-img">${isVideo?`<video src="${src}" muted preload="metadata"></video>`:`<img src="${src}" loading="lazy">`}</div><div class="svc-text"><h3>${s.title}</h3><p>${s.desc}</p></div></div>`;
+  }).join('');
+})();
+
+// Featured
+(function(){
+  const tabs=document.getElementById('featuredTabs');
+  const cats=['全部','白底图','场景图','灯具/家居建材','户外家具','节日装饰'];
+  tabs.innerHTML=cats.map((c,i)=>`<button class="tab${i?'':' active'}" onclick="filterFeatured('${c}',this)">${c}</button>`).join('');
+  renderFeatured('全部');
+})();
+function filterFeatured(cat,btn){
+  document.querySelectorAll('#featuredTabs .tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');featuredFilter=cat;renderFeatured(cat);
+}
+function renderFeatured(cat){
+  let imgs=[...D.featured];
+  if(cat==='白底图')imgs=imgs.filter(x=>x.path.includes('白底图'));
+  else if(cat==='场景图')imgs=imgs.filter(x=>x.path.includes('场景图')&&!x.path.includes('香薰精油'));
+  else if(cat==='灯具/家居建材')imgs=imgs.filter(x=>D.lighting_building.some(k=>x.path.includes(k)));
+  else if(cat==='户外家具')imgs=imgs.filter(x=>D.outdoor_furniture.some(k=>x.path.includes(k)));
+  else if(cat==='节日装饰')imgs=imgs.filter(x=>D.holiday.some(k=>x.path.includes(k)));
+  document.getElementById('featuredGrid').innerHTML=imgs.map(x=>`<div class="card-img" onclick="openLB('${x.path}')"><img src="${x.path}" loading="lazy"></div>`).join('');
+}
+
+// All Works
+(function initAllWorks(){
+  const tabs=document.getElementById('allworksCats');
+  tabs.innerHTML='<button class="tab active" onclick="allWorksPickCat(\'白底图\',this)">白底图</button><button class="tab" onclick="allWorksPickCat(\'场景图\',this)">场景图</button>';
+  allWorksPickCat('白底图',tabs.querySelector('.tab'));
+})();
+function allWorksPickCat(cat,btn){
+  document.querySelectorAll('#allworksCats .tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  allworksView='categories';allworksCat=cat;allworksSub='';allworksPage=0;
+  renderAllWorks();
+}
+function allWorksPickSub(sub){
+  allworksView='images';allworksSub=sub;allworksPage=0;renderAllWorks();
+}
+function allWorksBackToCats(){allworksView='categories';allworksSub='';renderAllWorks()}
+function allWorksLoadMore(){allworksPage++;renderAllWorks(true)}
+
+function renderAllWorks(append){
+  const el=document.getElementById('allworksContent');
+  
+  if(allworksView==='categories'){
+    const subs=D.categories[allworksCat]||{};
+    const entries=Object.entries(subs).filter(([s])=>allworksCat==='场景图'?!s.includes('香薰精油'):true);
+    el.innerHTML=`<div class="sub-grid">${entries.map(([sname,files])=>{
+      const img=files[Math.floor(Math.random()*files.length)];
+      return `<div class="sub-card" onclick="allWorksPickSub('${sname}')"><img src="${img.path}" loading="lazy"><div class="sub-info"><div class="sub-name">${sname}</div><div class="sub-count">${files.length} 张</div></div></div>`;
+    }).join('')}</div>`;
+    return;
+  }
+  
+  if(allworksView==='images'){
+    const allImgs=((D.categories[allworksCat]||{})[allworksSub])||[];
+    const start=append?allworksPage*PER_PAGE:0;
+    const page=allImgs.slice(start,start+PER_PAGE);
+    const hasMore=start+PER_PAGE<allImgs.length;
+    
+    if(!append){
+      el.innerHTML=`<div class="back-btn" onclick="allWorksBackToCats()">← 返回 ${allworksCat}</div><div class="section-title" style="font-size:16px">${allworksSub} · ${allImgs.length} 张</div><div class="all-grid" id="allworksGrid">${page.map(x=>`<div class="card-img" onclick="openLB('${x.path}')"><img src="${x.path}" loading="lazy"></div>`).join('')}</div>${hasMore?`<button class="load-more" onclick="allWorksLoadMore()">加载更多</button>`:''}`;
+    }else{
+      const grid=document.getElementById('allworksGrid');
+      if(grid)grid.innerHTML+=page.map(x=>`<div class="card-img" onclick="openLB('${x.path}')"><img src="${x.path}" loading="lazy"></div>`).join('');
+      const lm=el.querySelector('.load-more');
+      if(lm&&!hasMore)lm.remove();
+    }
+  }
+}
+
+// Videos
+(function(){
+  document.getElementById('videoTabs').innerHTML='<button class="tab active" onclick="switchVideo(\'实拍视频\',this)">实拍视频</button><button class="tab" onclick="switchVideo(\'AI视频\',this)">AI 视频</button>';
+  renderVideos('实拍视频');
+})();
+function switchVideo(tab,btn){
+  document.querySelectorAll('#videoTabs .tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');videoTab=tab;renderVideos(tab);
+}
+function renderVideos(tab){
+  const vids=D.videos[tab]||[];
+  document.getElementById('videoGrid').innerHTML=`<div class="video-grid">${vids.map(v=>`<div class="video-card" onclick="openVideo('${v.path}')"><div class="vthumb"><video src="${v.path}" preload="metadata" muted playsinline></video><div class="vplay">▶</div></div><div class="vtitle">${v.title||v.name||''}</div></div>`).join('')}</div>`;
+}
+
+// AI
+document.getElementById('aiGrid').innerHTML=D.ai_featured.map(x=>`<div class="card-img" onclick="openLB('${x.path}')"><img src="${x.path}" loading="lazy"></div>`).join('');
+
+// Lightbox
+function openLB(p){const lb=document.getElementById('lb');lb.innerHTML='<span class="lbclose">×</span><img src="'+p+'">';lb.classList.add('active')}
+function openVideo(p){const lb=document.getElementById('lb');lb.innerHTML='<span class="lbclose">×</span><video src="'+p+'" controls autoplay></video>';lb.classList.add('active')}
+function closeLB(){document.getElementById('lb').classList.remove('active')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLB()});
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+</script>
+</body>
+</html>
