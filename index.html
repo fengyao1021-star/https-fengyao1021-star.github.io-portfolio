@@ -122,7 +122,7 @@ footer{padding:40px 28px;text-align:center;font-size:11px;color:var(--t3);border
   <span class="brand">姚锋 · 产品摄影</span>
   <div class="links">
     <a href="#home">首页</a><a href="#services">服务</a><a href="#featured">精选作品</a>
-    <a href="#allworks">全部作品</a><a href="#videos">视频</a><a href="#aivisual">AI视觉</a>
+    <a href="#allworks">全部作品</a><a href="#videos">视频</a>
     <a href="#about">关于</a><a href="#contact">联系</a>
   </div>
   <button class="hamburger" onclick="toggleMenu()">☰</button>
@@ -131,8 +131,7 @@ footer{padding:40px 28px;text-align:center;font-size:11px;color:var(--t3);border
   <button class="close" onclick="toggleMenu()">×</button>
   <a href="#home" onclick="toggleMenu()">首页</a><a href="#services" onclick="toggleMenu()">服务</a>
   <a href="#featured" onclick="toggleMenu()">精选作品</a><a href="#allworks" onclick="toggleMenu()">全部作品</a>
-  <a href="#videos" onclick="toggleMenu()">视频</a><a href="#aivisual" onclick="toggleMenu()">AI视觉</a>
-  <a href="#about" onclick="toggleMenu()">关于</a><a href="#contact" onclick="toggleMenu()">联系</a>
+  <a href="#videos" onclick="toggleMenu()">视频</a><a href="#about" onclick="toggleMenu()">关于</a><a href="#contact" onclick="toggleMenu()">联系</a>
 </div>
 
 <!-- Hero -->
@@ -193,14 +192,6 @@ footer{padding:40px 28px;text-align:center;font-size:11px;color:var(--t3);border
   <div id="videoGrid"></div>
 </section>
 
-<!-- AI Visual -->
-<section id="aivisual">
-  <div class="section-label">AI 产品视觉实验室</div>
-  <div class="section-title">AI 辅助视觉</div>
-  <div class="section-sub">基于文生图、图生图、图生视频能力，为产品前期视觉方向、脚本分镜、社交平台内容和概念图提供快速探索。</div>
-  <div class="featured-grid" id="aiGrid"></div>
-</section>
-
 <!-- About -->
 <section id="about">
   <div class="section-label">关于</div>
@@ -250,12 +241,11 @@ document.getElementById('heroImg').src=D.hero;
 
 // Services
 (function(){
-  const svcImgs=[D.featured.find(x=>x.path.includes('水龙头'))||D.featured[0],D.featured.find(x=>x.path.includes('休闲椅'))||D.featured[5],D.videos.实拍视频[0],D.ai_featured[0]];
+  const svcImgs=[D.featured.find(x=>x.path.includes('水龙头'))||D.featured[0],D.featured.find(x=>x.path.includes('休闲椅'))||D.featured[5],D.videos.实拍视频[0]];
   const svcs=[
     {title:'产品白底图',desc:'适用于电商主图、详情页、平台标准图。重点呈现产品结构、材质、比例与细节。',img:svcImgs[0]},
     {title:'场景图 / 生活方式图',desc:'适用于品牌官网、广告图、详情页和社交平台。呈现产品在真实使用环境中的价值。',img:svcImgs[1]},
     {title:'产品视频拍摄',desc:'适用于新品发布、功能展示、社交平台短视频素材。完成产品展示与氛围呈现。',img:{path:svcImgs[2]?.path,name:svcImgs[2]?.title}},
-    {title:'AI 产品视觉',desc:'适用于视觉方向探索、概念图、脚本分镜和图生视频。在正式拍摄前快速验证风格。',img:svcImgs[3]},
   ];
   document.getElementById('servicesGrid').innerHTML=svcs.map(s=>{
     const src=s.img?.path||'';
@@ -346,9 +336,6 @@ function renderVideos(tab){
   const vids=D.videos[tab]||[];
   document.getElementById('videoGrid').innerHTML=`<div class="video-grid">${vids.map(v=>`<div class="video-card" onclick="openVideo('${v.path}')"><div class="vthumb"><video src="${v.path}" preload="metadata" muted playsinline></video><div class="vplay">▶</div></div><div class="vtitle">${v.title||v.name||''}</div></div>`).join('')}</div>`;
 }
-
-// AI
-document.getElementById('aiGrid').innerHTML=D.ai_featured.map(x=>`<div class="card-img" onclick="openLB('${x.path}')"><img src="${x.path}" loading="lazy"></div>`).join('');
 
 // Lightbox
 function openLB(p){const lb=document.getElementById('lb');lb.innerHTML='<span class="lbclose">×</span><img src="'+p+'">';lb.classList.add('active')}
